@@ -16,7 +16,7 @@ const Header = ({data,loading,setsearchField,checkboxchange}) => {
                         </div>
                     </div>
                     <div className='container title' >
-                    <div className="row bd p-3">
+                    <div className="row bd p-2">
                         <div className ="col">
                             <input  className="form-check-input h5 "
                              name='allselect' 
