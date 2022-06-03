@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Header = ({data,setsearchField,checkboxchange}) => {
+const Header = ({data,loading,setsearchField,checkboxchange}) => {
+
+    if(loading){
+        return <h2>Please wait while loading</h2>
+    }
+    else{
     return (
         
         <div className="Appsd">
@@ -17,7 +22,7 @@ const Header = ({data,setsearchField,checkboxchange}) => {
                              name='allselect' 
                              type="checkbox" 
                              onChange={checkboxchange}
-                             
+                             checked={data.filter(user=>user?.isChecked!==true).length<1}
                              
                              /></div> 
                         <label className ="col" >Name</label>
@@ -31,6 +36,8 @@ const Header = ({data,setsearchField,checkboxchange}) => {
                     
         
     );
+    }
 }
+
 
 export default Header;

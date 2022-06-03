@@ -1,7 +1,7 @@
 import React from "react";
 import Cardlist from "./Cardlist";
 
-const Card = ({data,checkboxchange,loading,onDelete,usersSelected,setuserSelected}) => {
+const Card = ({data,checkboxchange,loading,onDelete,updateuser,setupdate,setupdateuser}) => {
         
         
 
@@ -26,9 +26,10 @@ const Card = ({data,checkboxchange,loading,onDelete,usersSelected,setuserSelecte
                 email={arr.email}
                 role={arr.role}
                 onDelete={onDelete}
-                usersSelected={usersSelected}
-                setuserSelected={setuserSelected}
+                updateuser={updateuser}
                 checkboxchange={checkboxchange}
+                setupdate={setupdate}
+                setupdateuser={setupdateuser}
                 />
             );
         })

@@ -3,15 +3,20 @@ import './App.css';
 import Card from './Components/Card';
 import Header from './Components/Header';
 import ReactPaginate from 'react-paginate'
+import Update from './Components/Update';
+
 
 // import Pagination from './Components/Pagination';
 
 
 const App=() =>  {
+  const [update,setupdate]=useState(false);
+  const [updateuser,setupdateuser] =useState({})
   const [Users,setUsers]=useState([]);
   // const[currentpage,setcurrentpage]=useState(1)
   const [loading,setloading]=useState(true);
   const [filteredUsers,setfilteredUsers]=useState([]);
+  
  const [searchField,setsearchField]=useState("");
 //  const postsPerPage=10;
  const [currentItems, setCurrentItems] = useState(null);
@@ -19,8 +24,8 @@ const App=() =>  {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
-  const [usersSelected,setusersSelected] =useState([])
   const itemsPerPage=10
+  
   useEffect(()=>{
     
     function getdata(){
@@ -129,13 +134,30 @@ const App=() =>  {
     setfilteredUsers(filteredUsers.filter(user=>user.isChecked!==true))
     
   }
-  
+  if (update){
+    return(
+      <Update setupdate={setupdate} setfilteredUsers={setfilteredUsers} filteredUsers={filteredUsers} updateuser={updateuser}/>
+    )
+  }
+  else{
   return (
-    <div className="container">
-        <Header data={currentItems} setsearchField={setsearchField} checkboxchange={checkboxchange} />
-        <Card  data={currentItems} loading={loading} onDelete={Delete} usersSelected={usersSelected} checkboxchange={checkboxchange} setuserSelected={setusersSelected} />
-         <div className='container mt-2'>
-          <div className='row'>
+      <div className="container">
+        
+        <Header 
+        data={currentItems} 
+        setsearchField={setsearchField} 
+        checkboxchange={checkboxchange}
+        loading={loading} />
+        <Card  
+        data={currentItems} 
+        loading={loading} 
+        onDelete={Delete} 
+        setupdate={setupdate} 
+        checkboxchange={checkboxchange} 
+        setupdateuser={setupdateuser} />
+        
+        <div className='container mt-2'>
+        <div className='row'>
             <div className='col-4 mt-2'>
             <button type="button" onClick={()=>Ondeleteall()} className="btn btn-secondary" style={{borderRadius:'20px'}}>Delete Selected</button>
             </div>
@@ -163,10 +185,11 @@ const App=() =>  {
       />
       </div>
       </div>
-        </div>
+      </div>
       
     
   );
+  }
 }
 
 export default App;
