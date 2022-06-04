@@ -35,3 +35,6 @@
 .link{
   cursor: pointer;
 }
+.card{
+  height: 70vh;
+}

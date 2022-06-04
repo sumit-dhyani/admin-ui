@@ -51,9 +51,9 @@ const App=() =>  {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   useEffect(() => {
-    // Fetch items from another resources.
+    
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    
     setCurrentItems((filteredUsers.slice(itemOffset, endOffset)));
     
     setPageCount(Math.ceil(filteredUsers.length / itemsPerPage));
@@ -63,8 +63,10 @@ const App=() =>  {
   
   useEffect(()=>{
     function getlist(){
+      
       setfilteredUsers(Users.filter(user=>{
         return user.name.toLowerCase().includes(searchField.toLowerCase())||user.role.toLowerCase().includes(searchField.toLowerCase())||user.email.toLowerCase().includes(searchField.toLowerCase())
+      
       }))
     
     }
@@ -75,42 +77,29 @@ const App=() =>  {
 
     const { name, checked} =e.target;
     let newObj=[]
-    // console.log(name,checked)
     if(name==="allselect"){
-    let tempUser=currentItems.map((user)=>{
-      newObj.push(user.name)
-      return {...user, isChecked: checked}
-    })
-    let newar=filteredUsers
-    for(let i=0;i<newObj.length;i++){
-      newar=newar.filter(user=>user.name!==newObj[i])
-    }
-    // console.log("newar",newar)
-    // console.log("concat",tempUser.concat(newar))
-
-
-    // console.log(newar)
-    // console.log('combined',combined)
-    // console.log("tempuser",tempUser)
-    setfilteredUsers(tempUser.concat(newar))
+        let tempUser=currentItems.map((user)=>{
+          newObj.push(user.name)
+          return {...user, isChecked: checked}
+        })
+        let newar=filteredUsers
+        for(let i=0;i<newObj.length;i++){
+          newar=newar.filter(user=>user.name!==newObj[i])
+        }
+        
+        setfilteredUsers(tempUser.concat(newar))
     }
     else{
-    let tempUser = filteredUsers.map((user)=>
-    user.name===name? {...user,isChecked:checked} :user);
-    
-    
-    setfilteredUsers(tempUser)
-    
+      let tempUser = filteredUsers.map((user)=>
+      user.name===name? {...user,isChecked:checked} :user);
+      setfilteredUsers(tempUser)
+      
     }
 }
 
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % filteredUsers.length;
-    
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
     
   };
@@ -134,8 +123,10 @@ const App=() =>  {
     setfilteredUsers(filteredUsers.filter(user=>user.isChecked!==true))
     
   }
+  
   if (update){
     return(
+      
       <Update setupdate={setupdate} setfilteredUsers={setfilteredUsers} filteredUsers={filteredUsers} updateuser={updateuser}/>
     )
   }
@@ -173,14 +164,15 @@ const App=() =>  {
         renderOnZeroPageCount={null}
         containerClassName={'col-8 pagination mt-2'}
         pageClassName={'page-item'}
-        pageLinkClassName={'page-link rounded-circle mx-2'}
+        pageLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
         previousClassName={'page-item'}
-        previousLinkClassName={'page-link rounded-circle mx-2'}
+        previousLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
         nextClassName={'page-item'}
-        nextLinkClassName={'page-link rounded-circle mx-2'}
+        nextLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
         breakClassName={'page-item'}
-        breakLinkClassName={'page-link rounded-circle mx-2'}
+        breakLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
         activeClassName={'active'}
+        activeLinkClassName={'bg-dark text-white'}
 
       />
       </div>
