@@ -6,26 +6,26 @@ import ReactPaginate from 'react-paginate'
 import Update from './Components/Update';
 
 
-// import Pagination from './Components/Pagination';
+
 
 
 const App=() =>  {
   const [update,setupdate]=useState(false);
   const [updateuser,setupdateuser] =useState({})
   const [Users,setUsers]=useState([]);
-  // const[currentpage,setcurrentpage]=useState(1)
+  
   const [loading,setloading]=useState(true);
   const [filteredUsers,setfilteredUsers]=useState([]);
   
  const [searchField,setsearchField]=useState("");
-//  const postsPerPage=10;
+
  const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
+  
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage=10
   
+  // This will be called only once when the app is started it fetchs records from api
   useEffect(()=>{
     
     function getdata(){
@@ -36,7 +36,6 @@ const App=() =>  {
         var newarr=data.map((user)=>{ 
           return {...user,isChecked:false} 
         })
-        console.log(newarr)
         setUsers(newarr)
         
         
@@ -50,6 +49,8 @@ const App=() =>  {
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
+
+  //This is a hook for react.pagination which tells it how many users to be displayed
   useEffect(() => {
     
     const endOffset = itemOffset + itemsPerPage;
@@ -60,44 +61,45 @@ const App=() =>  {
     
   }, [itemOffset, itemsPerPage,filteredUsers]);
 
-  
+  //Used a react hook here . It will be called automatically as soon as the searchfield is changed.
   useEffect(()=>{
-    function getlist(){
+      function getlist(){
+        
+        setfilteredUsers(Users.filter(user=>{
+          return user.name.toLowerCase().includes(searchField.toLowerCase())||user.role.toLowerCase().includes(searchField.toLowerCase())||user.email.toLowerCase().includes(searchField.toLowerCase())
+        
+        }))
       
-      setfilteredUsers(Users.filter(user=>{
-        return user.name.toLowerCase().includes(searchField.toLowerCase())||user.role.toLowerCase().includes(searchField.toLowerCase())||user.email.toLowerCase().includes(searchField.toLowerCase())
-      
-      }))
-    
-    }
-    getlist()
-  },[searchField,Users])
+      }
+      getlist()
+    },[searchField,Users])
   
+  //to handle checkbox function for selected users or all in a page if selected
   const checkboxchange=(e)=>{
 
-    const { name, checked} =e.target;
-    let newObj=[]
-    if(name==="allselect"){
-        let tempUser=currentItems.map((user)=>{
-          newObj.push(user.name)
-          return {...user, isChecked: checked}
-        })
-        let newar=filteredUsers
-        for(let i=0;i<newObj.length;i++){
-          newar=newar.filter(user=>user.name!==newObj[i])
+        const { name, checked} =e.target;
+        let newObj=[]
+        if(name==="allselect"){
+            let tempUser=currentItems.map((user)=>{
+              newObj.push(user.name)
+              return {...user, isChecked: checked}
+            })
+            let newar=filteredUsers
+            for(let i=0;i<newObj.length;i++){
+              newar=newar.filter(user=>user.name!==newObj[i])
+            }
+            
+            setfilteredUsers(tempUser.concat(newar))
         }
-        
-        setfilteredUsers(tempUser.concat(newar))
-    }
-    else{
-      let tempUser = filteredUsers.map((user)=>
-      user.name===name? {...user,isChecked:checked} :user);
-      setfilteredUsers(tempUser)
+        else{
+          let tempUser = filteredUsers.map((user)=>
+          user.name===name? {...user,isChecked:checked} :user);
+          setfilteredUsers(tempUser)
+        }
+      }
       
-    }
-}
 
-
+  // This function responds to page clicks and set new elements to be displayed
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % filteredUsers.length;
     setItemOffset(newOffset);
@@ -106,18 +108,17 @@ const App=() =>  {
 
   
   
-  
+  //function to delete single item by using delete icon
   const Delete=(email)=>{
-    console.log(email)
     setfilteredUsers(filteredUsers.filter(user=>(
       (user.email.toLowerCase()!==email.toLowerCase())?
       user
-      :console.log("deleting this user",user)
+      :console.log("User deleted:",user.name)
       
     )))
-    console.log(filteredUsers)
     
   }
+  // Function to delete all selected elements at once.
   const Ondeleteall=()=>{
     
     setfilteredUsers(filteredUsers.filter(user=>user.isChecked!==true))
@@ -152,34 +153,29 @@ const App=() =>  {
             <div className='col-4 mt-2'>
             <button type="button" onClick={()=>Ondeleteall()} className="btn btn-secondary" style={{borderRadius:'20px'}}>Delete Selected</button>
             </div>
-            
-          
-        <ReactPaginate
-        breakLabel="..."
-        nextLabel=">"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={pageCount}
-        previousLabel="<"
-        renderOnZeroPageCount={null}
-        containerClassName={'col-8 pagination mt-2'}
-        pageClassName={'page-item'}
-        pageLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
-        previousClassName={'page-item'}
-        previousLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
-        nextClassName={'page-item'}
-        nextLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
-        breakClassName={'page-item'}
-        breakLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
-        activeClassName={'active'}
-        activeLinkClassName={'bg-dark text-white'}
-
-      />
+            <ReactPaginate
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="<"
+            renderOnZeroPageCount={null}
+            containerClassName={'col-8 pagination mt-2'}
+            pageClassName={'page-item'}
+            pageLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
+            previousClassName={'page-item'}
+            previousLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
+            nextClassName={'page-item'}
+            nextLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
+            breakClassName={'page-item'}
+            breakLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
+            activeClassName={'active'}
+            activeLinkClassName={'bg-dark text-white'}
+            />
       </div>
       </div>
-      </div>
-      
-    
+    </div>
   );
   }
 }

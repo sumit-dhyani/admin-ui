@@ -23,13 +23,12 @@ const Header = ({data,loading,setsearchField,checkboxchange}) => {
                              type="checkbox" 
                              onChange={checkboxchange}
                              checked={data.filter(user=>user?.isChecked!==true).length<1}
-                             
-                             /></div> 
+                             />
+                        </div> 
                         <label className ="col" >Name</label>
                         <label className ="col">Email</label>
                         <label className ="col">Role</label>
                         <label className='col'>Action</label>
-                          
                     </div>
                     </div>
         </div>

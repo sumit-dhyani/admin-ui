@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Cardlist = ({checkboxchange,user,name,email,role,onDelete,updateuser,setupdate,setupdateuser}) => {
+const Cardlist = ({checkboxchange,user,name,email,role,onDelete,setupdate,setupdateuser}) => {
     
     return (
         <div className='container '  >
@@ -12,10 +12,10 @@ const Cardlist = ({checkboxchange,user,name,email,role,onDelete,updateuser,setup
                             checked={user?.isChecked || false}  
                             type="checkbox" />
                         </div>
-                            <label className ="col">{name}</label>
-                            <label className ="col">{email}</label>
-                            <label className ="col capitalize-me">{role}</label>
-                            <label className='col'>
+                        <label className ="col">{name}</label>
+                        <label className ="col">{email}</label>
+                        <label className ="col capitalize-me">{role}</label>
+                        <label className='col'>
                                 <div className='container'>
                                     <div className='row'>
                                         <div className='col'>
@@ -39,7 +39,7 @@ const Cardlist = ({checkboxchange,user,name,email,role,onDelete,updateuser,setup
                              
                     </div>
                     
-                        </div>
+        </div>
     );
 };
 
