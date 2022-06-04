@@ -80,16 +80,25 @@ const App=() =>  {
         const { name, checked} =e.target;
         let newObj=[]
         if(name==="allselect"){
-            let tempUser=currentItems.map((user)=>{
+            currentItems.map((user)=>{
               newObj.push(user.name)
               return {...user, isChecked: checked}
             })
+            console.log("newobj",newObj)
             let newar=filteredUsers
             for(let i=0;i<newObj.length;i++){
-              newar=newar.filter(user=>user.name!==newObj[i])
+              newar=newar.filter(user=>{
+                if (newObj[i]===user.name){
+                  return user.isChecked=true
+                }
+                else{
+                  return user
+                }
+              })
             }
-            
-            setfilteredUsers(tempUser.concat(newar))
+            console.log("newarr",newar)
+            setfilteredUsers(newar)
+            console.log("filtered users",filteredUsers)
         }
         else{
           let tempUser = filteredUsers.map((user)=>
