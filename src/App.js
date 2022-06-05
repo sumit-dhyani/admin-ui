@@ -78,27 +78,21 @@ const App=() =>  {
   const checkboxchange=(e)=>{
 
         const { name, checked} =e.target;
-        let newObj=[]
+        console.log(name,checked)
         if(name==="allselect"){
-            currentItems.map((user)=>{
-              newObj.push(user.name)
-              return {...user, isChecked: checked}
-            })
-            console.log("newobj",newObj)
             let newar=filteredUsers
-            for(let i=0;i<newObj.length;i++){
-              newar=newar.filter(user=>{
-                if (newObj[i]===user.name){
-                  return user.isChecked=true
+            for(let i=0;i<currentItems.length;i++){
+              newar=newar.map(user=>{
+                if (currentItems[i].name===user.name){
+                  return {...user,isChecked:checked}
                 }
                 else{
                   return user
                 }
               })
             }
-            console.log("newarr",newar)
             setfilteredUsers(newar)
-            console.log("filtered users",filteredUsers)
+            
         }
         else{
           let tempUser = filteredUsers.map((user)=>
