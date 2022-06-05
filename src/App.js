@@ -69,7 +69,7 @@ const App=() =>  {
           return user.name.toLowerCase().includes(searchField.toLowerCase())||user.role.toLowerCase().includes(searchField.toLowerCase())||user.email.toLowerCase().includes(searchField.toLowerCase())
         
         }))
-      
+        setItemOffset(0)
       }
       getlist()
     },[searchField,Users])
