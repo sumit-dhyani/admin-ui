@@ -13,7 +13,7 @@ const App=() =>  {
   const [update,setupdate]=useState(false);
   const [updateuser,setupdateuser] =useState({})
   const [Users,setUsers]=useState([]);
-  
+  const [page,setpage]=useState(0)
   const [loading,setloading]=useState(true);
   const [filteredUsers,setfilteredUsers]=useState([]);
   
@@ -37,7 +37,7 @@ const App=() =>  {
           return {...user,isChecked:false} 
         })
         setUsers(newarr)
-        
+        setfilteredUsers(newarr)
         
       setloading(false)}
       )
@@ -64,14 +64,20 @@ const App=() =>  {
   //Used a react hook here . It will be called automatically as soon as the searchfield is changed.
   useEffect(()=>{
       function getlist(){
-        
+        if (searchField!==''){
         setfilteredUsers(Users.filter(user=>{
           return user.name.toLowerCase().includes(searchField.toLowerCase())||user.role.toLowerCase().includes(searchField.toLowerCase())||user.email.toLowerCase().includes(searchField.toLowerCase())
         
         }))
         setItemOffset(0)
       }
+      else{
+        // setItemOffset((event.selected * itemsPerPage) % filteredUsers.length)
+        setItemOffset(page)
+      }
+      }
       getlist()
+      // eslint-disable-next-line
     },[searchField,Users])
   
   //to handle checkbox function for selected users or all in a page if selected
@@ -106,7 +112,7 @@ const App=() =>  {
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % filteredUsers.length;
     setItemOffset(newOffset);
-    
+    setpage(newOffset)
   };
 
   

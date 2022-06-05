@@ -1,7 +1,14 @@
 import React from 'react';
 
 const Header = ({data,loading,setsearchField,checkboxchange}) => {
-
+    const checkfnc=()=>{
+        if(data.length!==0){
+            return data.filter(user=>user?.isChecked!==true).length<1
+        }
+        else{
+            return false
+        }
+    }
     if(loading){
         return <h2>Please wait while loading</h2>
     }
@@ -22,7 +29,7 @@ const Header = ({data,loading,setsearchField,checkboxchange}) => {
                              name='allselect' 
                              type="checkbox" 
                              onChange={checkboxchange}
-                             checked={data.filter(user=>user?.isChecked!==true).length<1}
+                             checked={checkfnc()|| false}
                              />
                         </div> 
                         <label className ="col" >Name</label>
