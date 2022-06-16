@@ -4,21 +4,21 @@ const Cardlist = ({checkboxchange,user,name,email,role,onDelete,setupdate,setupd
     
     return (
         <div className='container '  >
-                    <div  className={user.isChecked===true?'row bd p-2 bg-success text-white':'row gy-5 bd p-2'}>
-                        <div className ="col">
+                    <div  className={user.isChecked===true?'row bd p-2 bg-success text-white':'row bd p-2'}>
+                        <div className ="col-2">
                             <input className='form-check-input h5' 
                             name={name} 
                             onChange={(e)=>checkboxchange(e)} 
                             checked={user?.isChecked || false}  
                             type="checkbox" />
                         </div>
-                        <label className ="col">{name}</label>
-                        <label className ="col">{email}</label>
-                        <label className ="col capitalize-me">{role}</label>
-                        <label className='col'>
+                        <label className ="col-2">{name}</label>
+                        <div className ="col-4 wrap">{email}</div>
+                        <label className ="col-2 capitalize-me">{role}</label>
+                        <label className='col-2'>
                                 <div className='container'>
                                     <div className='row'>
-                                        <div className='col'>
+                                        <div className='col-sm-12'>
                                             
                                         <span title='Update User' onClick={()=>{setupdateuser(user)
                                             setupdate(true)}}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-down-left mr link" viewBox="0 0 16 16">

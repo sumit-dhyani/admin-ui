@@ -2,18 +2,19 @@ import React,{ useEffect,useState } from 'react';
 import './App.css';
 import Card from './Components/Card';
 import Header from './Components/Header';
-import ReactPaginate from 'react-paginate'
 import Update from './Components/Update';
+import Pagination from './Components/Pagination';
 
 
 
 
 
 const App=() =>  {
+  
   const [update,setupdate]=useState(false);
   const [updateuser,setupdateuser] =useState({})
   const [Users,setUsers]=useState([]);
-  const [page,setpage]=useState(0)
+  const [page,setpage]=useState(1)
   const [loading,setloading]=useState(true);
   const [filteredUsers,setfilteredUsers]=useState([]);
   
@@ -63,28 +64,32 @@ const App=() =>  {
 
   //Used a react hook here . It will be called automatically as soon as the searchfield is changed.
   useEffect(()=>{
+      
       function getlist(){
-        if (searchField!==''){
+        // if (searchField!==''){
+        
         setfilteredUsers(Users.filter(user=>{
           return user.name.toLowerCase().includes(searchField.toLowerCase())||user.role.toLowerCase().includes(searchField.toLowerCase())||user.email.toLowerCase().includes(searchField.toLowerCase())
         
         }))
         setItemOffset(0)
-      }
-      else{
-        // setItemOffset((event.selected * itemsPerPage) % filteredUsers.length)
-        setItemOffset(page)
-      }
+        setpage(1)
+        
+      // }
+      // else{
+      //   // setItemOffset((event.selected * itemsPerPage) % filteredUsers.length)
+      //   setItemOffset((page-1)*10)
+      // }
       }
       getlist()
+      console.log("searchfield")
       // eslint-disable-next-line
-    },[searchField,Users])
+    },[searchField])
   
   //to handle checkbox function for selected users or all in a page if selected
   const checkboxchange=(e)=>{
 
         const { name, checked} =e.target;
-        console.log(name,checked)
         if(name==="allselect"){
             let newar=filteredUsers
             for(let i=0;i<currentItems.length;i++){
@@ -97,47 +102,77 @@ const App=() =>  {
                 }
               })
             }
+            setUsers(newar)
             setfilteredUsers(newar)
             
         }
         else{
           let tempUser = filteredUsers.map((user)=>
           user.name===name? {...user,isChecked:checked} :user);
-          setfilteredUsers(tempUser)
+          setUsers(tempUser)
+          setfilteredUsers(Users)
         }
       }
       
 
   // This function responds to page clicks and set new elements to be displayed
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % filteredUsers.length;
-    setItemOffset(newOffset);
-    setpage(newOffset)
-  };
-
-  
+  const paginate = (number)=>{
+    setpage(number)
+    console.log(page,"page")
+    setItemOffset(((number-1) * itemsPerPage) % filteredUsers.length)
+    
+    
+  }
   
   //function to delete single item by using delete icon
   const Delete=(email)=>{
-    setfilteredUsers(filteredUsers.filter(user=>(
+    var filtered=Users.filter(user=>(
       (user.email.toLowerCase()!==email.toLowerCase())?
       user
       :console.log("User deleted:",user.name)
       
-    )))
+    ))
+    setfilteredUsers(filtered)
+    setUsers(filtered)
     
+  }
+  const pagechange=(e)=>{
+    if(e.target.value==="first"){
+      setItemOffset(0)
+      setpage(1)
+    }
+    if(e.target.value==='previous'){
+     if(itemOffset>=10){
+      console.log(itemOffset)
+      setItemOffset(itemOffset-itemsPerPage)
+      setpage(page-1)
+    }
+    }
+    if(e.target.value==='next'){
+      if(itemOffset<=(pageCount-2)*itemsPerPage){
+       console.log(itemOffset)
+       setItemOffset(itemOffset+itemsPerPage)
+       setpage(page+1)
+      }
+     }
+    if(e.target.value==="last"){
+      setItemOffset((pageCount-1)*10)
+      setpage(pageCount)
+    }
   }
   // Function to delete all selected elements at once.
   const Ondeleteall=()=>{
-    
-    setfilteredUsers(filteredUsers.filter(user=>user.isChecked!==true))
+    const newarr=filteredUsers.filter(user=>user.isChecked!==true)
+    setUsers(newarr)
+    console.log(Users)
+    setfilteredUsers(newarr)
     
   }
   
   if (update){
     return(
       
-      <Update setupdate={setupdate} setfilteredUsers={setfilteredUsers} filteredUsers={filteredUsers} updateuser={updateuser}/>
+      <Update setupdate={setupdate} setfilteredUsers={setfilteredUsers} setUsers={setUsers} filteredUsers={filteredUsers} updateuser={updateuser}/>
     )
   }
   else{
@@ -162,28 +197,20 @@ const App=() =>  {
             <div className='col-4 mt-2'>
             <button type="button" onClick={()=>Ondeleteall()} className="btn btn-secondary" style={{borderRadius:'20px'}}>Delete Selected</button>
             </div>
-            <ReactPaginate
-            breakLabel="..."
-            nextLabel=">"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
-            pageCount={pageCount}
-            previousLabel="<"
-            renderOnZeroPageCount={null}
-            containerClassName={'col-8 pagination mt-2'}
-            pageClassName={'page-item'}
-            pageLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
-            previousClassName={'page-item'}
-            previousLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
-            nextClassName={'page-item'}
-            nextLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
-            breakClassName={'page-item'}
-            breakLinkClassName={'page-link rounded-circle mx-2 bg-info text-white'}
-            activeClassName={'active'}
-            activeLinkClassName={'bg-dark text-white'}
-            />
+            
+            <ul className='col-8 pagination mt-2'>
+                <li className='page-item link  ' onClick={pagechange}><button className='page-link mx-2 rounded-circle bg-info text-white  '  value="first">&#60;&#60;</button>	</li>
+                <li  className='page-item link' ><button name="hi" className='page-link rounded-circle mx-2 bg-info text-white' value="previous" onClick={pagechange}>&#60;</button>	</li>
+                <Pagination 
+                selected={page}
+                pages={pageCount} 
+                paginate={paginate}/>
+                <li className='page-item link'><button className='page-link rounded-circle mx-2 bg-info text-white ' value="next" onClick={pagechange}>&#62;</button>	</li>
+                <li className='page-item link' onClick={pagechange}><button className='page-link rounded-circle mx-2 bg-info text-white' value="last">&#62;&#62;</button>	</li>
+            </ul>
       </div>
       </div>
+      
     </div>
   );
   }

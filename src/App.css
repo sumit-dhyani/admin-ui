@@ -38,3 +38,8 @@
 .card{
   height: 70vh;
 }
+.wrap{
+  overflow-x: hidden;
+  
+  
+}

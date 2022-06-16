@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-const Update = ({setupdate,setfilteredUsers,filteredUsers,updateuser}) => {
+const Update = ({setupdate,setUsers,setfilteredUsers,filteredUsers,updateuser}) => {
     const [name,setname]=useState()
     const [emailnew,setemailnew]=useState()
     const [rolenew,setrolenew]=useState()
@@ -26,14 +26,16 @@ const Update = ({setupdate,setfilteredUsers,filteredUsers,updateuser}) => {
         }
         
         else{
-            setfilteredUsers(filteredUsers.map((user)=>{
+            const changed=filteredUsers.map((user)=>{
                 if(user.email===updateuser.email){
                     return {...user,email:emailnew,name:name,role:rolenew}
                 } 
                 else{
                     return user
                 }}
-                ))
+                )
+            setfilteredUsers(changed)
+            setUsers(changed)
             setupdate(false)
         }
     }

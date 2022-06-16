@@ -18,13 +18,14 @@ const Header = ({data,loading,setsearchField,checkboxchange}) => {
         <div className="Appsd">
                     <div className="container mt-5">
                         <div className='row'>
-                        <input type="text" onChange={(e)=>setsearchField(e.target.value)} className="form-control col "  placeholder="Search by name, email or role" aria-label="Username">
+                        <input type="text" onChange={(e)=>setsearchField(e.target.value)} className="form-control col-12 "  placeholder="Search by name, email or role" aria-label="Username">
                         </input>
                         </div>
                     </div>
+                
                     <div className='container title' >
                     <div className="row bd p-2">
-                        <div className ="col">
+                        <div className ="col-2">
                             <input  className="form-check-input h5 "
                              name='allselect' 
                              type="checkbox" 
@@ -32,10 +33,10 @@ const Header = ({data,loading,setsearchField,checkboxchange}) => {
                              checked={checkfnc()|| false}
                              />
                         </div> 
-                        <label className ="col" >Name</label>
-                        <label className ="col">Email</label>
-                        <label className ="col">Role</label>
-                        <label className='col'>Action</label>
+                        <label className ="col-2" >Name</label>
+                        <label className ="col-4">Email</label>
+                        <label className ="col-2">Role</label>
+                        <label className='col-2'>Action</label>
                     </div>
                     </div>
         </div>
