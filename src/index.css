@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #bb6dffd5;
+  
+  
+  
 }
 
 code {
@@ -13,4 +17,22 @@ code {
 }
 .bgr{
   background-color: red;
+  
+}
+
+#root::before{
+  background:#bb6dffd5 url("https://www.wallpapertip.com/wmimgs/83-838296_web-designer-professional-website-background-images.jpg") no-repeat center center/cover  ;
+  content:'';
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height:100%;
+  opacity: 0.2;
+  z-index: -1;
+  
+}
+.update{
+  background-color: #aac1f3d5;
+  
 }

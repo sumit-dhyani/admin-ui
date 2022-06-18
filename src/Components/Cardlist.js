@@ -12,13 +12,13 @@ const Cardlist = ({checkboxchange,user,name,email,role,onDelete,setupdate,setupd
                             checked={user?.isChecked || false}  
                             type="checkbox" />
                         </div>
-                        <label className ="col-2">{name}</label>
+                        <label className ="col-2 d-flex">{name}</label>
                         <div className ="col-4 wrap">{email}</div>
                         <label className ="col-2 capitalize-me">{role}</label>
                         <label className='col-2'>
                                 <div className='container'>
                                     <div className='row'>
-                                        <div className='col-sm-12'>
+                                        <div className='col-12 d-flex '>
                                             
                                         <span title='Update User' onClick={()=>{setupdateuser(user)
                                             setupdate(true)}}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-down-left mr link" viewBox="0 0 16 16">

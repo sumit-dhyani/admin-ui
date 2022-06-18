@@ -171,14 +171,20 @@ const App=() =>  {
   
   if (update){
     return(
-      
+      <div className="container">
+        <div className='row '>
+          <div className='col-12'>
       <Update setupdate={setupdate} setfilteredUsers={setfilteredUsers} setUsers={setUsers} filteredUsers={filteredUsers} updateuser={updateuser}/>
+      </div>
+      </div>
+      </div>
     )
   }
   else{
   return (
-      <div className="container">
-        
+      <div className="container" >
+        <div className='row'>
+          <div className='col-12'>
         <Header 
         data={currentItems} 
         setsearchField={setsearchField} 
@@ -194,23 +200,26 @@ const App=() =>  {
         
         <div className='container mt-2'>
         <div className='row'>
-            <div className='col-4 mt-2'>
-            <button type="button" onClick={()=>Ondeleteall()} className="btn btn-secondary" style={{borderRadius:'20px'}}>Delete Selected</button>
-            </div>
+            {/* <div className='col-4 mt-2'> */}
+            <button type="button"  onClick={()=>Ondeleteall()} className="btn btn-secondary my-3 col-sm-12 col-md-4  mt-2" style={{borderRadius:'20px'}}>Delete Selected</button>
+            {/* </div> */}
             
-            <ul className='col-8 pagination mt-2'>
+            <ul className='col-sm-12 col-md-8 pagination mt-2 d-flex justify-content-center flex-wrap'>
                 <li className='page-item link  ' onClick={pagechange}><button className='page-link mx-2 rounded-circle bg-info text-white  '  value="first">&#60;&#60;</button>	</li>
                 <li  className='page-item link' ><button name="hi" className='page-link rounded-circle mx-2 bg-info text-white' value="previous" onClick={pagechange}>&#60;</button>	</li>
-                <Pagination 
+                {/* <div className='container'>
+                  <div className=''> */}
+                  <Pagination 
                 selected={page}
                 pages={pageCount} 
                 paginate={paginate}/>
+                    {/* </div></div> */}
                 <li className='page-item link'><button className='page-link rounded-circle mx-2 bg-info text-white ' value="next" onClick={pagechange}>&#62;</button>	</li>
                 <li className='page-item link' onClick={pagechange}><button className='page-link rounded-circle mx-2 bg-info text-white' value="last">&#62;&#62;</button>	</li>
             </ul>
       </div>
+      </div></div>
       </div>
-      
     </div>
   );
   }
